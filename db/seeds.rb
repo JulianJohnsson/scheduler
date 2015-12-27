@@ -5,3 +5,18 @@
 #
 #   cities = City.create([{ name: 'Chicago' }, { name: 'Copenhagen' }])
 #   Mayor.create(name: 'Emanuel', city: cities.first)
+
+Event.destroy_all
+
+events = Event.create!([{
+		title: "Déjeuner d'affaire",
+		author: "Julien Janson",
+		description: "Il s'agit d'un business lunch de la plus haute importance.",
+		duration: 2
+	},
+	{
+		title: "Apéro",
+		author: "Vincent Lorber",
+		description: "Venez boire l'apéro à la maison et découvrir mon nouveau chez moi !",
+		duration: 4
+	}])
