@@ -15,5 +15,11 @@
         <%= event.description %>
       </p>
     </div>
+    <span>
+      <% event.tags.each do |tag| %>
+        <%= link_to tag.name, '#', class: 'label label-primary' %>
+      <% end %>
+    </span>
+
   </div>
 </li>

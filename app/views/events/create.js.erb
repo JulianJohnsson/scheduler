@@ -1,0 +1,6 @@
+$('.event-list').prepend('<%=j render @event %>');
+var form = $('#new_event');
+form.find('input[type=text]').val('')
+form.find('input[type=radio]').removeAttr('checked')
+form.find('option').removeAttr('selected')
+$('.event-form').toggle()
