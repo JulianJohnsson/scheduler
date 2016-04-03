@@ -10,5 +10,16 @@
   <meta charset="UTF-8">
 </head>
 <body>
-  <%= yield %>
+	<ul>
+		<li>
+			<% if current_user %>
+				<%= link_to 'Logout', logout_path %>
+			<% else %>
+				<%= link_to 'Login', login_path %>
+			<% end %>
+		</li>
+	</ul>
+	
+	<%= yield %>
+	
 </body>
