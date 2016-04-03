@@ -51,3 +51,4 @@ group :production do
 	gem 'rails_serve_static_assets'
 end
 
+ruby "2.1.3"
