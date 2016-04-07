@@ -3,13 +3,11 @@ class User < ActiveRecord::Base
 
 	class << self
 	  def from_omniauth(auth_hash)
-	    @user = User.find_or_create_by(uid: auth_hash['uid'], provider: auth_hash['provider'])
-	    @user.name = auth_hash['info']['name']
-	    @user.location = auth_hash['info']['location']
-	    @user.image_url = auth_hash['info']['image']
-	    @user.url = auth_hash['info']['urls'][user.provider.capitalize]
-	    @user.save!
-	    @user
+	    user = User.find_by(uid: auth_hash['uid'], provider: auth_hash['provider'])
+	    if user == nil
+			user = User.create(uid: auth_hash['uid'], provider: auth_hash['provider'], password: auth_hash['uid'], password_confirmation: auth_hash['uid'], location: auth_hash['info']['location'], image_url: auth_hash['info']['image'], name: auth_hash['info']['name'], email: auth_hash['info']['email'])
+		end
+		user
 	  end
 	end
 end

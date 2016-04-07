@@ -16,11 +16,12 @@ class SessionsController < ApplicationController
 
   def create_google
     begin
-      @user = User.from_omniauth(request.env['omniauth.auth'])
-      session[:user_id] = @user.id
-      flash[:success] = "Welcome, #{@user.name}!"
+      user = User.from_omniauth(request.env['omniauth.auth']) 
+      logger.debug request.env['omniauth.auth']
+      session[:user_id] = user.id
+      flash.now[:success] = "Welcome, #{user.name}!"
     rescue
-      flash[:warning] = "There was an error while trying to authenticate you..."
+      flash.now[:warning] = "There was an error while trying to authenticate you..."
     end
     redirect_to root_path
   end
