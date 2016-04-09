@@ -1,7 +1,10 @@
 Rails.application.routes.draw do
   get :login, to: 'sessions#new'
   get :logout, to: 'sessions#destroy'
+  
   get '/auth/:provider/callback', to: 'sessions#create_google'
+
+  get '/users/:id/change_password', to: 'users#change_password', as: :change_password
 
   resources :sessions
   resources :users

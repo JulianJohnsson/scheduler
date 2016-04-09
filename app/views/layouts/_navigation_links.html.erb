@@ -2,7 +2,7 @@
 
 <ul class="nav navbar-nav">
 	<% if current_user %>
-        <li><%= link_to "Profile", '#' %></li>
+        <li><%= link_to "Profile", user_path(current_user) %></li>
         <li><%= link_to "Settings", '#' %></li>
     	<li> <%= link_to "Logout", logout_path %></li>
   	<% else %>
