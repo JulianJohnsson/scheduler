@@ -6,7 +6,12 @@ class SessionsController < ApplicationController
   	user = User.find_by email: params[:login][:email]
 
   	if user && user.authenticate(params[:login][:password])
-  		session[:user_id] = user.id
+      if params[:remember_me]
+        cookies.permanent[:auth_token] = user.auth_token
+      else
+        cookies[:auth_token] = user.auth_token
+      end
+  		#session[:user_id] = user.id
   		redirect_to root_path, notice: 'Successfully logged in'
   	else
   		flash.now.alert = 'Invalid email or password'
@@ -17,8 +22,8 @@ class SessionsController < ApplicationController
   def create_google
     begin
       user = User.from_omniauth(request.env['omniauth.auth']) 
-      logger.debug request.env['omniauth.auth']
-      session[:user_id] = user.id
+      cookies.permanent[:auth_token] = user.auth_token
+      #session[:user_id] = user.id
       flash.now[:success] = "Welcome, #{user.name}!"
     rescue
       flash.now[:warning] = "There was an error while trying to authenticate you..."
@@ -27,7 +32,8 @@ class SessionsController < ApplicationController
   end
 
   def destroy
-  	session[:user_id] = nil
+  	cookies.delete(:auth_token)
+    #session[:user_id] = nil
   	redirect_to root_path, notice: 'Successfully logged out'
   end
 
