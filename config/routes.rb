@@ -1,4 +1,5 @@
 Rails.application.routes.draw do
+
   get :login, to: 'sessions#new'
   get :logout, to: 'sessions#destroy'
   
@@ -9,6 +10,7 @@ Rails.application.routes.draw do
   resources :sessions
   resources :users
   resources :events
+  resources :password_resets
   root to: 'events#index'
 
   # The priority is based upon order of creation: first created -> highest priority.
