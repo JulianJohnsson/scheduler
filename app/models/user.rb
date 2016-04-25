@@ -31,6 +31,9 @@ class User < ActiveRecord::Base
 				user.save!
 			end
 		end
+		user.access_token = auth_hash['credentials']['token']
+		user.refresh_token = auth_hash['credentials']['refresh_token']
+		user.save!
 		user
 	  end
 	end
