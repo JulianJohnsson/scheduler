@@ -1,0 +1,15 @@
+<h1>Select which calendars should be used by Scheduler</h1>
+
+<div class="message">
+	<p>
+		Your availability will be based on this calendar, and your new events will be saved there.
+	</p>
+</div>
+<div >
+	<%= simple_form_for(@calendar, html: {class: "form"}) do |f| %>
+		<%= f.error_notification %>
+		<%= f.input :google_calendar_id, :label => "Agenda", :collection => @calendars.sort.map {|k,v| [k,v]} %>
+		<%= f.input :user_id, :as => "hidden", :input_html => { :value => current_user.id } %>
+		<%= f.submit "Submit", :class => "btn-lg btn-primary" %>
+	<% end %>
+</div>

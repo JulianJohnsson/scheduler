@@ -1,5 +1,6 @@
 class User < ActiveRecord::Base
 	has_secure_password
+	has_many :calendars
 	validates :password, presence: true, length: { minimum: 6 }, allow_nil: true
 	before_create { generate_token(:auth_token) }
 
