@@ -7,7 +7,7 @@ Bot.on :message do |message|
 
   	case message.text
   	
-  	when (/hello/i || /coucou/i || /salut/i || /bonjour/i || /yo/i)
+  	when /bonjour/i
 	  	Bot.deliver(
 	    	recipient: message.sender,
 	    	message: {
