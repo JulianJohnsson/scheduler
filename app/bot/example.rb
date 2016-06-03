@@ -47,6 +47,7 @@ Bot.on :message do |message|
 	      		text: "Bisous"
 	    	}
 	  	)
+	end
 		
 end
 
@@ -58,7 +59,7 @@ Bot.on :postback do |postback|
 	    text = 'Oh.'
 	when 'OTHER'
 		text = 'youhou'
-  end
+  	end
 
   Bot.deliver(
     recipient: postback.sender,
