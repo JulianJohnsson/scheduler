@@ -26,7 +26,7 @@ Bot.on :message do |message|
 	            text: 'Quand?',
 	            buttons: [
 	              { type: 'postback', title: 'Now', payload: 'NOW' },
-	              { type: 'postback', title: 'Dans 1h', payload: '1' }
+	              { type: 'postback', title: 'Dans 1h', payload: '1' },
 	              { type: 'postback', title: 'Autre', payload: 'OTHER' }
 	            ]
 	          }
