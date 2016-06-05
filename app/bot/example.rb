@@ -1,6 +1,8 @@
 
 include Facebook::Messenger
 
+@user = User.find_by_email('juljanson@gmail.com')
+
 Bot.on :message do |message|
 
 	puts "Received #{message.text} from #{message.sender}"
@@ -41,6 +43,7 @@ Bot.on :message do |message|
 	      		text: "Je ne vous parlerais pas si vous ne me dites pas bonjour !"
 	    	}
 	  	)
+	  	sleep(3)
 	  	Bot.deliver(
 	    	recipient: message.sender,
 	    	message: {
@@ -54,7 +57,12 @@ end
 Bot.on :postback do |postback|
 	case postback.payload
 	when 'NOW'
-		text = 'That makes bot happy!'
+		# contacter calendar api isbusy?
+		if @user.calendar.isbusy(DateTime.now, 2.hours.from_now)
+			text = 'Libre !'
+		else 
+			text = 'Occupé !'
+		end
 	when '1'
 	    text = 'Oh.'
 	when 'OTHER'
