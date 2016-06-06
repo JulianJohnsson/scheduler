@@ -30,7 +30,7 @@ class Calendar < ActiveRecord::Base
     free_busy.time_min = datemin.to_datetime.rfc3339
     free_busy.time_max= datemax.to_datetime.rfc3339
 
-    is_busy = service.query_freebusy([free_busy]).calendars.busy
+    is_busy = service.query_freebusy([free_busy], timeMin: datemin.to_datetime.rfc3339, timeMax: datemax.to_datetime.rfc3339).calendars.busy
     
     if is_busy.empty?
       return false
