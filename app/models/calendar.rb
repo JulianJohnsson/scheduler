@@ -24,13 +24,13 @@ class Calendar < ActiveRecord::Base
 
     items = Google::Apis::CalendarV3::FreeBusyRequestItem.new
     items.id = self.google_calendar_id
-    
+
     free_busy = Google::Apis::CalendarV3::FreeBusyRequest.new
     free_busy.items = items
     free_busy.time_min = datemin.to_datetime.rfc3339
     free_busy.time_max= datemax.to_datetime.rfc3339
 
-    is_busy = service.query_freebusy(free_busy).calendars.busy
+    is_busy = service.query_freebusy([free_busy]).calendars.busy
     
     if is_busy.empty?
       return false
