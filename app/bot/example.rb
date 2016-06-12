@@ -58,7 +58,7 @@ Bot.on :postback do |postback|
 	case postback.payload
 	when 'NOW'
 		# contacter calendar api isbusy?
-		if @user.calendars.first.isbusy(DateTime.now, 2.hours.from_now)
+		if @user.calendars.first.is_busy?(DateTime.now, 2.hours.from_now)
 			text = 'Libre !'
 		else 
 			text = 'Occupé !'

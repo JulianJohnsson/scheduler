@@ -10,32 +10,32 @@ class Calendar < ActiveRecord::Base
   	calendars = Hash[calendar_list.items.map{|calendar| [calendar.summary, calendar.id]}]
   end
 
-  def fetch_calendar
+  def fetch_calendar(options={})
+    defaults = {
+      :datemin => DateTime.now,
+      :datemax => nil
+    }
+    options = defaults.merge(options)
+
   	client = Signet::OAuth2::Client.new(access_token: self.user.access_token)
     service = Google::Apis::CalendarV3::CalendarService.new
     service.authorization = client
-    event_list = service.list_events(self.google_calendar_id, time_min: DateTime.now.to_datetime.rfc3339).items
+
+    event_list = service.list_events(self.google_calendar_id, 
+      time_min: options[:datemin].to_datetime.rfc3339, 
+      time_max: options[:datemax].to_datetime.rfc3339
+      ).items
   end
 
-  def isbusy(datemin, datemax)
-    client = Signet::OAuth2::Client.new(access_token: self.user.access_token)
-    service = Google::Apis::CalendarV3::CalendarService.new
-    service.authorization = client
-
-    items = Google::Apis::CalendarV3::FreeBusyRequestItem.new
-    items.id = self.google_calendar_id
-
-    free_busy = Google::Apis::CalendarV3::FreeBusyRequest.new
-    free_busy.items = items
-    free_busy.time_min = datemin.to_datetime.rfc3339
-    free_busy.time_max= datemax.to_datetime.rfc3339
-
-    is_busy = service.query_freebusy([free_busy], timeMin: datemin.to_datetime.rfc3339, timeMax: datemax.to_datetime.rfc3339).calendars.busy
+  def is_busy?(datemin, datemax)
+    options = { :datemin => datemin, :datemax => datemax }
+    event_list = fetch_calendar(options)
     
-    if is_busy.empty?
+    if event_list.empty?
       return false
     else
       return true
-    end     
+    end  
   end
+
 end
