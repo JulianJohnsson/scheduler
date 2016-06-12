@@ -21,10 +21,16 @@ class Calendar < ActiveRecord::Base
     service = Google::Apis::CalendarV3::CalendarService.new
     service.authorization = client
 
-    event_list = service.list_events(self.google_calendar_id, 
-      time_min: options[:datemin].to_datetime.rfc3339, 
-      time_max: options[:datemax].to_datetime.rfc3339
-      ).items
+    if options[:datemax] != nil
+      event_list = service.list_events(self.google_calendar_id, 
+        time_min: options[:datemin].to_datetime.rfc3339, 
+        time_max: options[:datemax].to_datetime.rfc3339
+        ).items
+    else
+      event_list = service.list_events(self.google_calendar_id, 
+        time_min: options[:datemin].to_datetime.rfc3339
+        ).items
+    end
   end
 
   def is_busy?(datemin, datemax)
