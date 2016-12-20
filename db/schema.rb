@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160425201555) do
+ActiveRecord::Schema.define(version: 20160614195041) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -25,6 +25,19 @@ ActiveRecord::Schema.define(version: 20160425201555) do
   end
 
   add_index "calendars", ["user_id"], name: "index_calendars_on_user_id", using: :btree
+
+  create_table "conversations", force: :cascade do |t|
+    t.string   "facebook_id"
+    t.string   "name"
+    t.datetime "created_at",  null: false
+    t.datetime "updated_at",  null: false
+    t.integer  "user_id"
+    t.string   "context"
+    t.string   "question"
+    t.boolean  "isquestion"
+  end
+
+  add_index "conversations", ["user_id"], name: "index_conversations_on_user_id", using: :btree
 
   create_table "event_tags", force: :cascade do |t|
     t.integer  "event_id"
@@ -78,6 +91,7 @@ ActiveRecord::Schema.define(version: 20160425201555) do
   add_index "users", ["uid"], name: "index_users_on_uid", using: :btree
 
   add_foreign_key "calendars", "users"
+  add_foreign_key "conversations", "users"
   add_foreign_key "event_tags", "events"
   add_foreign_key "event_tags", "tags"
 end
